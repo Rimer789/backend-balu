@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mysql = require('mysql2');
+const cors = require('cors');
 const reservasRouter = require('./routes/reservas');
 
 dotenv.config();
@@ -19,6 +20,10 @@ connection.connect((err) => {
 
 // Middleware para parsear el cuerpo de las solicitudes como JSON
 app.use(express.json());
+
+
+// Middleware para habilitar CORS
+app.use(cors());
 
 // Ruta base para las reservas
 app.use('/api', reservasRouter);
