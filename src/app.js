@@ -19,11 +19,12 @@ connection.connect((err) => {
 });
 
 // Middleware para parsear el cuerpo de las solicitudes como JSON
-app.use(express.json());
+
 
 
 // Middleware para habilitar CORS
-app.use(cors());
+app.options('*', cors()); // Agrega esto antes de tus otras rutas
+app.use(express.json());
 
 // Ruta base para las reservas
 app.use('/api', reservasRouter);
