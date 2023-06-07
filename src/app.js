@@ -1,7 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mysql = require('mysql2');
-const cors = require('cors'); // Agrega esta línea
 const reservasRouter = require('./routes/reservas');
 
 dotenv.config();
@@ -18,14 +17,19 @@ connection.connect((err) => {
   console.log('Connected to PlanetScale!');
 });
 
-// Middleware para habilitar CORS
-app.use(cors()); // Agrega esta línea
-
 // Middleware para parsear el cuerpo de las solicitudes como JSON
 app.use(express.json());
 
 // Ruta base para las reservas
 app.use('/api', reservasRouter);
+
+// Middleware para habilitar CORS
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
 // Otros middlewares y rutas...
 
