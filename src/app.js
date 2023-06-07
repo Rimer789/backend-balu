@@ -1,7 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mysql = require('mysql2');
-const cors = require('cors');
 const reservasRouter = require('./routes/reservas');
 
 dotenv.config();
@@ -19,11 +18,6 @@ connection.connect((err) => {
 });
 
 // Middleware para parsear el cuerpo de las solicitudes como JSON
-
-
-
-// Middleware para habilitar CORS
-app.options('*', cors()); // Agrega esto antes de tus otras rutas
 app.use(express.json());
 
 // Ruta base para las reservas
@@ -34,6 +28,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', 'true'); // Agrega esta línea
   next();
 });
 
